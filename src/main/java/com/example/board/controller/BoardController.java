@@ -40,4 +40,9 @@ public class BoardController {
         }
         return boardMapper.findBoard(offset, pageSize);
     }
+
+    @GetMapping("/board/count")
+    public Integer countBoard() {
+        return boardMapper.countBoard();
+    }
 }
