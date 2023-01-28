@@ -17,13 +17,17 @@ public interface BoardMapper {
 
     @Select({"<script>",
     "SELECT * from board",
-    "order by id desc",
-    "</script>"})
-    List<BoardVO> findBoard();
-
-    @Select({"<script>",
-    "SELECT * from board",
     "where id = #{id}",
     "</script>"})
     BoardVO findOneBoard(int id);
+
+    // 게시판 목록보기 페이징 적용 후
+    @Select({"<script>",
+    "SELECT * from board",
+    "order by id desc",
+    "<if test='offset != null and pageSize != null'>",
+    "LIMIT #{offset}, #{pageSize}",
+    "</if>",
+    "</script>"})
+    List<BoardVO> findBoard(Integer offset, Integer pageSize);
 }

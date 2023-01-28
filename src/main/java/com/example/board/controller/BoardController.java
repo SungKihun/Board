@@ -4,6 +4,7 @@ import com.example.board.domain.BoardVO;
 import com.example.board.domain.ResultVO;
 import com.example.board.persistence.BoardMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +30,14 @@ public class BoardController {
         return boardMapper.findOneBoard(id);
     }
 
+    // 게시판 목록보기 페이징 적용 후
     @GetMapping("/boards")
-    public List<BoardVO> findAllBoard() {
-        return boardMapper.findBoard();
+    public List<BoardVO> findAllBoard(@RequestParam @Nullable Integer pageNumber,
+                                      @RequestParam @Nullable Integer pageSize) {
+        Integer offset = null;
+        if (pageNumber != null && pageSize != null) {
+            offset = (pageNumber - 1) * pageSize;
+        }
+        return boardMapper.findBoard(offset, pageSize);
     }
 }
