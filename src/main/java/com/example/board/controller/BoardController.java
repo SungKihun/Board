@@ -45,4 +45,14 @@ public class BoardController {
     public Integer countBoard() {
         return boardMapper.countBoard();
     }
+
+    @PutMapping("/board")
+    public ResultVO modifyBoard(@RequestBody BoardVO boardVO) {
+        int result = boardMapper.updateBoard(boardVO);
+        if (result > 0) {
+            return new ResultVO(0, "success");
+        } else {
+            return new ResultVO(100, "fail");
+        }
+    }
 }

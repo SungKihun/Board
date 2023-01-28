@@ -4,35 +4,56 @@ import com.example.board.domain.BoardVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
 @Mapper
 public interface BoardMapper {
-    @Insert({"<script>",
+    @Insert({
+            "<script>",
             "INSERT INTO board(title, content)",
             "VALUES(#{title}, #{content})",
-            "</script>"})
+            "</script>"
+    })
     int insertBoard(BoardVO boardVO);
 
-    @Select({"<script>",
+    @Select({
+            "<script>",
             "SELECT * from board",
             "where id = #{id}",
-            "</script>"})
+            "</script>"
+    })
     BoardVO findOneBoard(int id);
 
     // 게시판 목록보기 페이징 적용 후
-    @Select({"<script>",
+    @Select({
+            "<script>",
             "SELECT * from board",
             "order by id desc",
             "<if test='offset != null and pageSize != null'>",
             "LIMIT #{offset}, #{pageSize}",
             "</if>",
-            "</script>"})
+            "</script>"
+    })
     List<BoardVO> findBoard(Integer offset, Integer pageSize);
 
-    @Select({"<script>",
+    @Select({
+            "<script>",
             "SELECT count(*) from board",
-            "</script>"})
+            "</script>"
+    })
     Integer countBoard();
+
+    @Update({
+            "<script>",
+            "UPDATE board",
+            "<trim prefix='set' suffixOverrides=','>",
+            "<if test='title != null'>title = #{title},</if>",
+            "<if test='content != null'>content = #{content},</if>",
+            "</trim>",
+            "WHERE id = #{id}",
+            "</script>"
+    })
+    int updateBoard(BoardVO boardVO);
 }
