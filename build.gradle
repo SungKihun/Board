@@ -20,14 +20,15 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'com.mysql:mysql-connector-j:8.0.32'
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter'
-    // https://mvnrepository.com/artifact/org.mybatis/mybatis
-    implementation 'org.mybatis:mybatis:3.5.11'
+
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.1'
 }
 
 tasks.named('test') {
