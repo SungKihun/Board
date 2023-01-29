@@ -1,10 +1,7 @@
 package com.example.board.persistence;
 
 import com.example.board.domain.BoardVO;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -56,4 +53,12 @@ public interface BoardMapper {
             "</script>"
     })
     int updateBoard(BoardVO boardVO);
+
+    @Delete({
+            "<script>",
+            "DELETE FROM board",
+            "WHERE id = #{id}",
+            "</script>"
+    })
+    int deleteBoard(int id);
 }

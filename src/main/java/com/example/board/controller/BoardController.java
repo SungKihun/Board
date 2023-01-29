@@ -14,12 +14,13 @@ import java.util.List;
 @RequestMapping("/api")
 public class BoardController {
     private final BoardMapper boardMapper;
-
+    public static final String SUCCESS = "success";
+    
     @PostMapping("/board")
     public ResultVO addBoard(@RequestBody BoardVO boardVO) {
         int result = boardMapper.insertBoard(boardVO);
         if (result > 0) {
-            return new ResultVO(0, "success");
+            return new ResultVO(0, SUCCESS);
         } else {
             return new ResultVO(100, "fail");
         }
@@ -50,7 +51,17 @@ public class BoardController {
     public ResultVO modifyBoard(@RequestBody BoardVO boardVO) {
         int result = boardMapper.updateBoard(boardVO);
         if (result > 0) {
-            return new ResultVO(0, "success");
+            return new ResultVO(0, SUCCESS);
+        } else {
+            return new ResultVO(100, "fail");
+        }
+    }
+
+    @DeleteMapping("/board")
+    public ResultVO removeBoard(@RequestParam int id) {
+        int result = boardMapper.deleteBoard(id);
+        if (result > 0) {
+            return new ResultVO(0, SUCCESS);
         } else {
             return new ResultVO(100, "fail");
         }
