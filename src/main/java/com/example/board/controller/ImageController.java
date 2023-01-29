@@ -3,10 +3,10 @@ package com.example.board.controller;
 import com.example.board.domain.ImageVO;
 import com.example.board.persistence.ImageMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -26,5 +26,16 @@ public class ImageController {
         imageMapper.insertBoard(imageVO);
 
         return imageVO.getId();
+    }
+
+    @GetMapping("/view/{id}")
+    public ResponseEntity<byte[]> findOne(@PathVariable int id) {
+        ImageVO imageVO = imageMapper.findOneImage(id);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", imageVO.getMimetype());
+        headers.add("Content-Length", String.valueOf(imageVO.getData().length));
+
+        return new ResponseEntity<>(imageVO.getData(), headers, HttpStatus.OK);
     }
 }
