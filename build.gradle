@@ -3,7 +3,8 @@ plugins {
     id 'org.springframework.boot' version '2.7.8'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 
-    id 'war'
+    // war 빌드 파일 생성
+//    id 'war'
     // jib for Docker Image
     id 'com.google.cloud.tools.jib' version '3.3.1'
 }
